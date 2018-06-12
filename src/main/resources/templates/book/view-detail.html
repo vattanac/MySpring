@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="">
+<head>
+    <meta charset="UTF-8">
+    <title>View Detail Information</title>
+</head>
+<body>
+<h1>View Detail</h1>
+
+<!--ID:[[${book.id}]] <br>-->
+<!--Title:[[${book.title}]] <br>-->
+<!--Author:[[${book.author}]] <br>-->
+<!--Publisher:[[${book.publisher}]] <br>-->
+
+<th:block th:if="${book} != null" th:object="${book}">
+
+    ID:[[*{id}]] <br>
+    Title:[[*{title}]] <br>
+    Author:[[*{author}]] <br>
+    Publisher:[[*{publisher}]] <br>
+
+</th:block>
+
+<h1 th:unless="${book}" th:style="color:red">data not found</h1>
+</body>
+
+</html>

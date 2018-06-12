@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>List of Book</title>
+</head>
+<body>
+<h1>
+    <u>
+        List of all Books
+    </u>
+
+</h1>
+<!--[[${books}]]-->
+
+<a href="/?lang=en">English</a>
+<a href="/?lang=km">Khmer</a>
+<a href="/?lang=th">Thai</a>
+
+<a href="/create"><button>Create</button></a>
+<table border="1" style="border-collapse: collapse">
+    <tr>
+        <th th:text="#{table.id}">ID</th>
+        <th th:text="#{table.title}">Title</th>
+        <th>Author</th>
+        <th>Publisher</th>
+        <th>Action</th>
+    </tr>
+
+    <tr th:each="book:${books}">
+        <td>[[${book.id}]]</td>
+        <td>[[${book.title}]]</td>
+        <td>[[${book.author}]]</td>
+        <td>[[${book.publisher}]]</td>
+        <td>
+            <a th:href="@{/view/{id}(id=${book.id})}"><button>View</button></a>
+            <a th:href="@{/update/{id}(id=${book.id})}"><button>Update</button></a>
+            <button class="delete-btn" th:attr="data-id=${book.id}">Delete</button>
+
+        </td>
+    </tr>
+</table>
+
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('body').on('click','.delete-btn',function () {
+            var data_id =$(this).attr("data-id");
+            if (confirm("Do you want to delete?")){
+                window.location = "http://localhost:8080/remove/" +data_id;
+            }
+
+        });
+    });
+</script>
+</body>
+</html>

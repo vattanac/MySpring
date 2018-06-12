@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Create Book</h1>
+<form action="/create/submit" method="post"
+      th:object="${book}" enctype="multipart/form-data">
+
+    ID:<input type="number" th:field="*{id}">
+
+    <span style="color: red;" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></span>
+
+    <br>
+
+    Title:<input type="text" th:field="*{title}">
+    <span style="color: red;" th:if="${#fields.hasErrors('title')}" th:text="${#fields.errors('title')}"></span>
+
+    <br>
+
+    Author:<input type="text" th:field="*{author}"><br>
+    Publish: <input type="text" th:field="*{publisher}"><br>
+    <input type="file" name="file"><br>
+    <input type="submit" value="Submit">
+
+
+</form>
+
+</body>
+</html>
