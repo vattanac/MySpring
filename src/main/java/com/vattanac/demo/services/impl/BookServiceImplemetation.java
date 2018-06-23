@@ -30,7 +30,7 @@ public class BookServiceImplemetation implements BooksService {
     }
 
     @Override
-    public boolean Uppate(Book book) {
+    public boolean Update(Book book) {
         return this.bookRepositories.Update(book);
     }
 
@@ -40,12 +40,15 @@ public class BookServiceImplemetation implements BooksService {
     }
 
     @Override
-    public Integer count() {
-        return this.bookRepositories.count();
+    public boolean create(Book book) {
+        return this.bookRepositories.creat(book);
     }
 
-    @Override
-    public boolean create(Book book) {
-        return this.bookRepositories.create(book);
-    }
+
+//    @Override
+//    public Integer count() {
+//        return this.bookRepositories.count();
+//    }
+//
+
 }

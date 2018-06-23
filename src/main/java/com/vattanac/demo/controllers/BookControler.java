@@ -12,9 +12,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.File;
-import java.util.HashMap;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
-import java.util.Map;
+import java.util.UUID;
 
 @Controller
 public class BookControler {
@@ -53,7 +55,7 @@ public class BookControler {
     public String updateSubmit(@ModelAttribute Book book) {
         System.out.println(book);
 
-        this.booksService.Uppate(book);
+        this.booksService.Update(book);
         return "redirect:/index";
 
     }
@@ -66,16 +68,16 @@ public class BookControler {
     }
 
     //2
-    @GetMapping("/count")
-    @ResponseBody
-    public Map<String, Object> count() {
-        Map<String, Object> response = new HashMap<>();
-
-        response.put("record_count", this.booksService.count());
-        response.put("status", true);
-
-        return response;
-    }
+//    @GetMapping("/count")
+//    @ResponseBody
+//    public Map<String, Object> count() {
+//        Map<String, Object> response = new HashMap<>();
+//
+//        response.put("record_count", this.booksService.count());
+//        response.put("status", true);
+//
+//        return response;
+//    }
 
     @GetMapping("/create")
     public String create(Model model) {
@@ -85,22 +87,37 @@ public class BookControler {
 
     @PostMapping("/create/submit")
     public String createSubmit(@Valid Book book,
-        BindingResult bindingResult, MultipartFile file) {
+                               BindingResult bindingResult, MultipartFile file) {
 
 
         System.out.println(book);
 
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "book/create-book";
         }
 
-        if (file == null)return null;
+        if (file == null) return null;
 
-        File path = new File("/pp6th");
+        File path = new File("/Users/mac/Documents/Admin/HRD/Project/Spring/Topic3/pp6th");
         if (!path.exists())
-            path.mkdir();
+            path.mkdirs();
 
+        String filename = file.getOriginalFilename();
+        String extension = filename.substring(filename.lastIndexOf('.') + 1);
 
+        System.out.println(filename);
+        System.out.println(extension);
+
+        filename = UUID.randomUUID() + "." + extension;
+        System.out.println(filename);
+        try {
+
+            Files.copy(file.getInputStream(), Paths.get("/Users/mac/Documents/Admin/HRD/Project/Spring/Topic3/pp6th", filename));
+        } catch (IOException e) {
+
+        }
+        book.setThumbnail("/images-pp/" + filename);
+        System.out.println("fdfdsf"+book.getThumbnail());
         this.booksService.create(book);
         return "redirect:/home";
 

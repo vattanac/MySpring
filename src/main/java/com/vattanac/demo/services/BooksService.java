@@ -7,10 +7,10 @@ import java.util.List;
 public interface BooksService {
     List<Book> getAll();
     Book findOne(Integer id);
-    boolean Uppate(Book book);
+    boolean Update(Book book);
     boolean remove(Integer id);
 
     //2
-    Integer count();
+    //Integer count();
     boolean create(Book book);
 }

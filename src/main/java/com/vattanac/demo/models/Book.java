@@ -11,20 +11,25 @@ public class Book {
     public int id;
 
     @NotNull
-    @Size(min = 5,max = 50,message = "can't be greater then 5")
+    @Size(min = 5, max = 50, message = "can't be greater then 5")
     @Email
     public String title;
     public String author;
     public String publisher;
+    private String thumbnail;
 
 
-    public Book() {}
+    public Book() {
+    }
 
-    public Book(int id, String title, String author, String publisher) {
+    public Book(@Positive int id, @NotNull
+    @Size(min = 5, max = 50, message = "can't be greater then 5")
+    @Email String title, String author, String publisher, String thumbnail) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.publisher = publisher;
+        this.thumbnail = thumbnail;
     }
 
     public int getId() {
@@ -59,6 +64,15 @@ public class Book {
         this.publisher = publisher;
     }
 
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -66,6 +80,7 @@ public class Book {
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", publisher='" + publisher + '\'' +
+                ", thumbnail='" + thumbnail + '\'' +
                 '}';
     }
 }

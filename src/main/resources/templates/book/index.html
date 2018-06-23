@@ -3,27 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>List of Book</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+            integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+            crossorigin="anonymous"></script>
 </head>
 <body>
-<h1>
-    <u>
-        List of all Books
-    </u>
 
+
+
+
+
+
+<h1>
+    List of all Books
 </h1>
 <!--[[${books}]]-->
 
 <a href="/?lang=en">English</a>
 <a href="/?lang=km">Khmer</a>
 <a href="/?lang=th">Thai</a>
+<a href="/create">
+    <button type="button" class="btn btn-success">Create</button>
+</a>
 
-<a href="/create"><button>Create</button></a>
-<table border="1" style="border-collapse: collapse">
+<table class="table">
+
     <tr>
         <th th:text="#{table.id}">ID</th>
         <th th:text="#{table.title}">Title</th>
         <th>Author</th>
         <th>Publisher</th>
+        <th>Thumbnail</th>
         <th>Action</th>
     </tr>
 
@@ -32,10 +50,23 @@
         <td>[[${book.title}]]</td>
         <td>[[${book.author}]]</td>
         <td>[[${book.publisher}]]</td>
+        <!--<td th:text="${book.thumbnail}></td>-->
         <td>
-            <a th:href="@{/view/{id}(id=${book.id})}"><button>View</button></a>
-            <a th:href="@{/update/{id}(id=${book.id})}"><button>Update</button></a>
-            <button class="delete-btn" th:attr="data-id=${book.id}">Delete</button>
+            <img style="width: 100px;height: 100px" th:src="${book.getThumbnail()}" alt="img">
+
+        </td>
+        <td>
+            <a th:href="@{/view/{id}(id=${book.id})}">
+
+                <button type="button" class="btn btn-primary">View</button>
+
+
+            </a>
+            <a th:href="@{/update/{id}(id=${book.id})}">
+                <button type="button" class="btn btn-warning">Update</button>
+            </a>
+            <button type="button" class="delete-btn btn btn-danger" th:attr="data-id=${book.id}">Delete</button>
+
 
         </td>
     </tr>
@@ -44,10 +75,10 @@
 <script type="text/javascript" src="/static/js/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
-        $('body').on('click','.delete-btn',function () {
-            var data_id =$(this).attr("data-id");
-            if (confirm("Do you want to delete?")){
-                window.location = "http://localhost:8080/remove/" +data_id;
+        $('body').on('click', '.delete-btn', function () {
+            var data_id = $(this).attr("data-id");
+            if (confirm("Do you want to delete?")) {
+                window.location = "http://localhost:8080/remove/" + data_id;
             }
 
         });
