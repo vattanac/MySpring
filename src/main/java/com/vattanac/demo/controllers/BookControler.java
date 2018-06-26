@@ -48,13 +48,37 @@ public class BookControler {
     public String showUpdateForm(@PathVariable Integer id, ModelMap model) {
         Book book = this.booksService.findOne(id);
         model.addAttribute("book", book);
-        return "book/update";
+        return "book/update-book";
     }
 
-    @PostMapping("update/submit")
-    public String updateSubmit(@ModelAttribute Book book) {
+    @PostMapping("/update/submit")
+    public String updateSubmit(@ModelAttribute Book book, MultipartFile file) {
         System.out.println(book);
 
+
+
+        if (file.isEmpty()) {
+            String tmp = booksService.findOne(book.id).getThumbnail();
+            book.setThumbnail(tmp);
+        }
+
+        String filename = file.getOriginalFilename();
+
+        String extension = filename.substring(filename.lastIndexOf('.') + 1);
+
+
+        System.out.println(extension);
+
+        filename = UUID.randomUUID() + "." + extension;
+        System.out.println(filename);
+        try {
+
+            Files.copy(file.getInputStream(), Paths.get("/Users/mac/Documents/Admin/HRD/Project/Spring/Topic3/pp6th", filename));
+        } catch (IOException e) {
+
+        }
+
+        if (!file.isEmpty()) book.setThumbnail("/images-pp/" + filename);
         this.booksService.Update(book);
         return "redirect:/index";
 
@@ -63,7 +87,6 @@ public class BookControler {
     @GetMapping("remove/{id}")
     public String remove(@PathVariable Integer id) {
         this.booksService.remove(id);
-
         return "redirect:/";
     }
 
@@ -82,21 +105,17 @@ public class BookControler {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("book", new Book());
+//        List<Category> categories = this.c
         return "book/create-book";
     }
 
     @PostMapping("/create/submit")
-    public String createSubmit(@Valid Book book,
-                               BindingResult bindingResult, MultipartFile file) {
-
-
-        System.out.println(book);
-
+    public String createSubmit(@Valid Book book, BindingResult bindingResult, MultipartFile file) {
+        //System.out.println(book);
         if (bindingResult.hasErrors()) {
+            System.out.println("HElL YA");
             return "book/create-book";
         }
-
-        if (file == null) return null;
 
         File path = new File("/Users/mac/Documents/Admin/HRD/Project/Spring/Topic3/pp6th");
         if (!path.exists())
@@ -111,16 +130,23 @@ public class BookControler {
         filename = UUID.randomUUID() + "." + extension;
         System.out.println(filename);
         try {
-
             Files.copy(file.getInputStream(), Paths.get("/Users/mac/Documents/Admin/HRD/Project/Spring/Topic3/pp6th", filename));
         } catch (IOException e) {
 
         }
         book.setThumbnail("/images-pp/" + filename);
-        System.out.println("fdfdsf"+book.getThumbnail());
-        this.booksService.create(book);
-        return "redirect:/home";
+        System.out.println("fdfdsf" + book.getThumbnail());
+        if (!file.isEmpty()) {
+            this.booksService.create(book);
+        }
+        System.out.println(book);
+        return "redirect:/index";
 
+    }
+
+    @RequestMapping("/req")
+    public String Req() {
+        return "book/category";
     }
 
 

@@ -1,32 +1,44 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="book/admin-layout">
 <head>
     <meta charset="UTF-8">
+
     <title>Title</title>
 </head>
 <body>
+<div layout:fragment="content">
 <h1>Create Book</h1>
-<form action="/create/submit" method="post"
-      th:object="${book}" enctype="multipart/form-data">
+    <div class="container">
+    <div class="jumbotron">
+        <form action="/create/submit" method="post" th:object="${book}" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="email">Title:</label>
+                <input  type="text" th:field="*{title}" class="form-control" id="email" placeholder="Enter email" name="email">
+                <span style="color: red;" th:if="${#fields.hasErrors('title')}" th:text="${#fields.errors('title')}"></span>
 
-    ID:<input type="number" th:field="*{id}">
+            </div>
+            <div class="form-group">
+                <label>Author:</label>
+                <input type="text" th:field="*{author}" class="form-control"  placeholder="Enter password" name="pwd">
+            </div>
 
-    <span style="color: red;" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></span>
+            <div class="form-group">
+                <label>Category:</label>
 
-    <br>
+            </div>
 
-    Title:<input type="text" th:field="*{title}">
-    <span style="color: red;" th:if="${#fields.hasErrors('title')}" th:text="${#fields.errors('title')}"></span>
+            <div class="form-group">
+                <label>Publisher:</label>
+                <input type="text" th:field="*{publisher}" class="form-control"  placeholder="Enter password" name="pwd">
+            </div>
+            <input type="file" name="file"><br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</div>
 
-    <br>
-
-    Author:<input type="text" th:field="*{author}"><br>
-    Publish: <input type="text" th:field="*{publisher}"><br>
-    <input type="file" name="file"><br>
-    <input type="submit" value="Submit">
-
-
-</form>
-
+</div>
 </body>
 </html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="book/admin-layout">
+<head>
+    <meta charset="UTF-8">
+    <title>List of Book</title>
+</head>
+<html>
+<body>
+
+<div layout:fragment="content">
+
+    <hr>
+    <table class="table">
+
+        <tr>
+            <th th:text="#{table2.id}">ID</th>
+            <th th:text="#{table2.name}">Name</th>
+            <th th:text="#{table2.action}">Action</th>
+        </tr>
+
+        <tr th:each="category:${categories}" th:object="${category}">
+            <td th:text="*{id}"></td>
+            <td th:text="*{name}"></td>
+            <td>
+                <a th:href="@{/cateview/{id}(id=${category.id})}">
+                    <button type="button" class="btn btn-primary">View</button>
+                </a>
+                <a th:href="@{/cateupdate/{id}(id=${category.id})}">
+                    <button type="button" class="btn btn-warning">Update</button>
+                </a>
+                <button type="button" class="delete-btn2 btn btn-danger" th:attr="data-id=${category.id}">Delete</button>
+            </td>
+        </tr>
+    </table>
+
+    <script type="text/javascript" src="/static/admin/js/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('body').on('click', '.delete-btn2', function () {
+                var data_id = $(this).attr("data-id");
+                if (confirm("Do you want to delete?")) {
+                    window.location = "http://localhost:8080/remove/" + data_id;
+                }
+
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

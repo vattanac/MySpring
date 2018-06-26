@@ -1,5 +1,7 @@
 package com.vattanac.demo.models;
 
+import com.github.javafaker.Cat;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -7,29 +9,39 @@ import javax.validation.constraints.Size;
 
 public class Book {
 
-    @Positive
+
     public int id;
 
     @NotNull
     @Size(min = 5, max = 50, message = "can't be greater then 5")
-    @Email
     public String title;
     public String author;
     public String publisher;
     private String thumbnail;
 
 
+    private Category category;
+
     public Book() {
     }
 
-    public Book(@Positive int id, @NotNull
-    @Size(min = 5, max = 50, message = "can't be greater then 5")
-    @Email String title, String author, String publisher, String thumbnail) {
+    public Book(int id, @NotNull
+    @Size(min = 5, max = 50, message = "can't be greater then 5") String title, String author, String publisher, String thumbnail,Category category) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.publisher = publisher;
         this.thumbnail = thumbnail;
+        this.category =category;
+
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public int getId() {
@@ -81,6 +93,7 @@ public class Book {
                 ", author='" + author + '\'' +
                 ", publisher='" + publisher + '\'' +
                 ", thumbnail='" + thumbnail + '\'' +
+                ", category=" + category +
                 '}';
     }
 }

@@ -2,6 +2,7 @@ package com.vattanac.demo.repositories;
 
 import com.github.javafaker.Faker;
 import com.vattanac.demo.models.Book;
+import com.vattanac.demo.repositories.providers.BookProvider;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -11,8 +12,15 @@ import java.util.List;
 @Repository
 public interface BookRepositories {
 
+@SelectProvider(type = BookProvider.class,method = "getAllProvider")
+@Results({
+        @Result(column = "id",property = "id"),
+        @Result(column = "title",property = "title"),
+        @Result(column = "cate_id",property = "category.id"),
+        @Result(column = "name",property ="category.name" )
 
-@Select("select* from tbl_book")
+})
+//@Select("select* from tbl_book")
 List<Book> getAll();
 
 @Select("select* from tbl_book where id=#{id}")

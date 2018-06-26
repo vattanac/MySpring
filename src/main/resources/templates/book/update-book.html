@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="book/admin-layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<div layout:fragment="content">
+
+  <div class="container">
+          <div class="jumbotron">
+              <form action="/update/submit" method="post" th:object="${book}" enctype="multipart/form-data">
+                   <div class="form-group">
+
+                      <input type="hidden" th:field="*{id}">
+                                </div>
+                  <div class="form-group">
+                      <label for="email">Title:</label>
+                      <input type="text" th:field="*{title}" class="form-control" placeholder="title" >
+                  </div>
+                  <div class="form-group">
+                      <label for="pwd">Author:</label>
+                      <input type="text" th:field="*{author}" class="form-control"  placeholder="author" >
+                  </div>
+
+                  <div class="form-group">
+                      <label for="pwd">Publisher:</label>
+                      <input type="text" th:field="*{publisher}" class="form-control"  placeholder="Enter password">
+                  </div>
+
+                  <input type="file" name="file">
+                  <input type="submit" value="submit">Submit</input>
+              </form>
+          </div>
+      </div>
+</div>
+
+
+</body>
+</html>
