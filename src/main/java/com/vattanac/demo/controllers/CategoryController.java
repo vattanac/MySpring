@@ -26,10 +26,17 @@ public class CategoryController {
     public String index(ModelMap model) {
 //        List<Category> cateList = this.categoryService.getAll();
         model.addAttribute("categories", categoryService.getAll());
-        System.out.println(categoryService.getAll());
+//        System.out.println(categoryService.getAll());
         return "category/home";
     }
 
+    @GetMapping("/xxx")
+    @ResponseBody
+    public String  test()
+    {
+        System.out.println(categoryService.isExisted("comic").size());
+        return "hi";
+    }
     @GetMapping("/catecreate")
     public String create(Model model) {
         model.addAttribute("category", new Category());
@@ -39,8 +46,13 @@ public class CategoryController {
     @PostMapping("/catecreate/submit")
     public String createSubmit(@ModelAttribute Category category,BindingResult bindingResult) {
 
+
         System.out.println(category);
-        this.categoryService.create(category);
+        if (categoryService.isExisted(category.getName().toLowerCase()).size() ==0)
+        {
+            this.categoryService.create(category);
+        }
+
         return "redirect:/category";
 
     }
@@ -54,36 +66,27 @@ public class CategoryController {
 
     @GetMapping("/cateupdate/{id}")
     public String showUpdateForm(@PathVariable Integer id, ModelMap model) {
+        System.out.println(id);
         Category category = this.categoryService.findOne(id);
         model.addAttribute("category", category);
-        return "update-cate";
+        System.out.println("*****"+category);
+
+        return "category/update-cate";
     }
 
 
     @PostMapping("cateupdate/submit")
     public String updateSubmit(@ModelAttribute Category category, MultipartFile file) {
-
-
-        String filename = file.getOriginalFilename();
-
-        String extension = filename.substring(filename.lastIndexOf('.') + 1);
-
-
-        System.out.println(extension);
-
-        filename = UUID.randomUUID() + "." + extension;
-        System.out.println(filename);
-
-        return "redirect:/index";
+       categoryService.Update(category);
+        return "redirect:/category";
 
     }
 
     @GetMapping("cateremove/{id}")
     public String remove(@PathVariable Integer id) {
         this.categoryService.remove(id);
-        return "redirect:/";
+        return "redirect:/category";
     }
-
 
 
 

@@ -4,22 +4,18 @@
       layout:decorator="book/admin-layout">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Create Category</title>
 </head>
 <body>
 <div layout:fragment="content">
-    <h1>Create Book</h1>
+    <h1>Create Category</h1>
     <div class="container">
         <div class="jumbotron">
             <form action="/catecreate/submit" method="post" th:object="${category}" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label>ID:</label>
-                    <input type="text" th:field="*{id}" class="form-control"  placeholder="Enter password" >
 
-                </div>
                 <div class="form-group">
                     <label>Name:</label>
-                    <input type="text" th:field="*{name}" class="form-control"  placeholder="Enter password" name="pwd">
+                    <input type="text" th:field="*{name}" class="form-control"  placeholder="Enter Category Name" name="pwd">
                 </div>
 
                 <input type="submit" value="Submit">

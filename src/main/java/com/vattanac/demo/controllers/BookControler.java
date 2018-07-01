@@ -1,7 +1,9 @@
 package com.vattanac.demo.controllers;
 
 import com.vattanac.demo.models.Book;
+import com.vattanac.demo.models.Category;
 import com.vattanac.demo.services.BooksService;
+import com.vattanac.demo.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,10 +24,12 @@ import java.util.UUID;
 public class BookControler {
 
     private BooksService booksService;
+    private  CategoryService categoryService;
 
     @Autowired
-    public BookControler(BooksService booksService) {
+    public BookControler(BooksService booksService, CategoryService categoryService) {
         this.booksService = booksService;
+        this.categoryService = categoryService;
     }
 
     // @GetMapping("/index")
@@ -105,7 +109,7 @@ public class BookControler {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("book", new Book());
-//        List<Category> categories = this.c
+        model.addAttribute("categories",categoryService.getAll());
         return "book/create-book";
     }
 

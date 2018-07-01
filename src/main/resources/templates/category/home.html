@@ -41,9 +41,8 @@
             $('body').on('click', '.delete-btn2', function () {
                 var data_id = $(this).attr("data-id");
                 if (confirm("Do you want to delete?")) {
-                    window.location = "http://localhost:8080/remove/" + data_id;
+                    window.location = "http://localhost:8080/cateremove/" + data_id;
                 }
-
             });
         });
     </script>

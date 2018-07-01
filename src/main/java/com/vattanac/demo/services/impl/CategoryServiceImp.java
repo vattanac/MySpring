@@ -47,5 +47,10 @@ public class CategoryServiceImp implements CategoryService
         return categoryRepository.add(category);
     }
 
+    @Override
+    public List<Category> isExisted(String name) {
+        return categoryRepository.isExisted(name);
+    }
+
 
 }

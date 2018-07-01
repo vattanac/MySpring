@@ -17,14 +17,15 @@ public interface CategoryRepository {
     @Select("select count(*) from tbl_category")
     Integer count();
 
-
-    @Select("select * from categories where id=#{id}")
+    @Select("select * from tbl_category  where id=#{id} ")
     Category findOne(Integer id);
-    @Insert("insert into categories(name) values(#{name})")
+    @Insert("insert into tbl_category(name) values(#{name}) ")
     boolean add(Category model);
-    @Update("Update table categories set name=#{name} where id=#{id}")
+    @Update("Update tbl_category  set name=#{name} where id=#{id}")
     boolean update(Category model);
-    @Delete("delete from categories where id=#{id}")
+    @Delete("delete from tbl_category  where id=#{id}")
     boolean delete(Integer id);
+    @Select("select * from tbl_category where lower(name)=#{name}")
+    List<Category> isExisted(String name);
 
 }

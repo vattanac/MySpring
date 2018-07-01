@@ -28,7 +28,6 @@ public class DatasourceConfiguration {
     @Profile("my-h2")
     public DataSource inMemoryDB(){
         EmbeddedDatabaseBuilder databaseBuilder = new EmbeddedDatabaseBuilder();
-
         databaseBuilder.setType(EmbeddedDatabaseType.H2);
         databaseBuilder.addScript("db/schema.sql");
         databaseBuilder.addScript("db/data.sql");

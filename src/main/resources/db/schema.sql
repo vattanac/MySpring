@@ -1,5 +1,5 @@
 
-create tbl_category(
+create table  tbl_category(
  id serial primary  key ,
  name varchar
 );

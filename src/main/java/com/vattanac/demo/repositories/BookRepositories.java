@@ -26,13 +26,13 @@ List<Book> getAll();
 @Select("select* from tbl_book where id=#{id}")
 Book findOne(@Param("id") Integer id);
 
-@Update("update tbl_book set title =#{title}, author=#{author}, publisher=#{publisher}, thumbnail=#{thumbnail} where id=#{id}")
+@Update("update tbl_book set title =#{title}, author=#{author}, publisher=#{publisher} thumbnail=#{thumbnail} where id=#{id}")
 boolean Update(Book book);
 
 @Delete("delete from tbl_book where id=#{id}")
 boolean remove(Integer id);
 
-@Insert("insert into tbl_book(title,author, publisher,thumbnail) values(#{title} ,#{author},#{publisher},#{thumbnail})")
+@Insert("insert into tbl_book(title,author, publisher,cate_id,thumbnail) values(#{title} ,#{author},#{publisher},#{category.id},#{thumbnail})")
  boolean creat(Book book);
 
 //    Faker faker = new Faker();

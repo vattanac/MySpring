@@ -16,4 +16,5 @@ public interface CategoryService {
     boolean remove(Integer id);
 
     boolean create(Category category);
+    List<Category> isExisted(String name);
 }
