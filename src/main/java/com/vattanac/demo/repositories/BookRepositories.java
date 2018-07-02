@@ -26,7 +26,7 @@ List<Book> getAll();
 @Select("select* from tbl_book where id=#{id}")
 Book findOne(@Param("id") Integer id);
 
-@Update("update tbl_book set title =#{title}, author=#{author}, publisher=#{publisher} thumbnail=#{thumbnail} where id=#{id}")
+@Update("update tbl_book set title =#{title}, author=#{author}, publisher=#{publisher} ,thumbnail=#{thumbnail},cate_id=#{category.id} where id=#{id}")
 boolean Update(Book book);
 
 @Delete("delete from tbl_book where id=#{id}")

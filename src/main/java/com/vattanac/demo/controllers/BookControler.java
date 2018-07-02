@@ -1,5 +1,6 @@
 package com.vattanac.demo.controllers;
 
+import com.github.javafaker.Cat;
 import com.vattanac.demo.models.Book;
 import com.vattanac.demo.models.Category;
 import com.vattanac.demo.services.BooksService;
@@ -52,14 +53,13 @@ public class BookControler {
     public String showUpdateForm(@PathVariable Integer id, ModelMap model) {
         Book book = this.booksService.findOne(id);
         model.addAttribute("book", book);
+        model.addAttribute("categories",categoryService.getAll());
         return "book/update-book";
     }
 
     @PostMapping("/update/submit")
-    public String updateSubmit(@ModelAttribute Book book, MultipartFile file) {
+    public String updateSubmit(@ModelAttribute Book book, @ModelAttribute Category category, MultipartFile file) {
         System.out.println(book);
-
-
 
         if (file.isEmpty()) {
             String tmp = booksService.findOne(book.id).getThumbnail();
